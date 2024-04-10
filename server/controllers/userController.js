@@ -55,6 +55,23 @@ const RootQueryType = new GraphQLObjectType({
             }
         },
 
+        // Find one user by email
+        userByEmail: {
+            type: UserType,
+            description: 'A user by Email',
+            args: {
+                email: { type: GraphQLString }
+            },
+            resolve: async (parent, args) => {
+                try {
+                    const user = await User.findOne({ email: args.email });
+                    return user;
+                } catch (error) {
+                    throw new Error('Failed to fetch user');
+                }
+            }
+        },
+
         // Find all users
         users: {
             type: new GraphQLList(UserType),

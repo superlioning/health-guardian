@@ -17,23 +17,23 @@ require('dotenv').config()
 
 const app = express()
 
-// GraphQL endpoint configuration 
-app.use('/users', expressGraphQL({
-    schema: schema,
-    graphiql: true
-}));
-
-// Middlewares
-app.use(express.json())
-app.use(cookieParser())
-app.use(bodyParser.json());
-app.use(cors())
-
 // Set up MongoDB connection
 const connectionString = process.env.MONGODB_CONNECTION_STRING
 mongoose.connect(connectionString)
     .then(res => app.listen(process.env.PORT))
     .catch(err => console.log(err))
+
+// Middlewares
+app.use(express.json());
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(cors());
+
+// GraphQL endpoint configuration 
+app.use('/users', expressGraphQL({
+    schema: schema,
+    graphiql: true
+}));
 
 // Start express server
 const PORT = 4000
