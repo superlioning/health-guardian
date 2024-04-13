@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import { UserProvider } from "./context/UserContext";
 
 // Setup Apollo Client
 const client = new ApolloClient(
@@ -16,10 +17,13 @@ const client = new ApolloClient(
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
+// Wrap <App /> inside <UserProvider> to provide global state
 root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <UserProvider>
+        <App />
+      </UserProvider>
     </ApolloProvider>
   </React.StrictMode>
 );
