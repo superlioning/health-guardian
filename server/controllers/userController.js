@@ -125,6 +125,13 @@ const RootMutationType = new GraphQLObjectType({
             },
             resolve: async (parent, args) => {
                 try {
+                    const existingUser = await User.findOne({
+                      email: args.email,
+                    });
+                    if (existingUser) {
+                      throw new Error("Email already exists");
+                    }
+
                     const user = new User({
                         roleId: args.roleId,
                         firstName: args.firstName,
@@ -136,6 +143,24 @@ const RootMutationType = new GraphQLObjectType({
                     return newUser;
                 } catch (error) {
                     throw new Error('Failed to add the user');
+                }
+            }
+        },
+
+        // For user login
+        login: {
+            type: UserType,
+            description: 'Login a user',
+            args: {
+                email: { type: GraphQLNonNull(GraphQLString) },
+                password: { type: GraphQLNonNull(GraphQLString) }
+            },
+            resolve: async (_, args) => {
+                try {
+                    const user = await User.login(args.email, args.password);
+                    return user;
+                } catch (error) {
+                    throw new Error('Login failed: ' + error.message);
                 }
             }
         },
