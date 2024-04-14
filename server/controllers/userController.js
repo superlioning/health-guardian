@@ -1,4 +1,5 @@
 const User = require('../models/userModel')
+const PatientData = require('../models/patientDataModel')
 const {
     GraphQLObjectType,
     GraphQLString,
@@ -10,8 +11,9 @@ const {
 /**
  * Implenent GraphQL to design user controller
  * Define a UserType for user model
- * Define a RootQueryType to query users database
- * Define a RootMutationType to perform mutations on users  
+ * Define a PatientDataType for patientData model
+ * Define a RootQueryType to query users database and patientDatas database
+ * Define a RootMutationType to perform mutations on users and patientData 
  */
 
 
@@ -29,7 +31,26 @@ const UserType = new GraphQLObjectType({
     })
 })
 
-// RootQueryType with three query methods
+//PatientDataType with data fields
+const PatientDataType = new GraphQLObjectType({
+    name: 'PatientDataType',
+    description: 'This represents a patient data.',
+    fields: () => ({
+        _id: {type: GraphQLNonNull(GraphQLString)},
+        patientId: {type: GraphQLNonNull(GraphQLString)},
+        fullName: {type: GraphQLNonNull(GraphQLString)},
+        date: {type: GraphQLNonNull(GraphQLString)},
+        bodyTemp: {type: GraphQLNonNull(GraphQLString)},
+        heartRate: {type: GraphQLNonNull(GraphQLString)},
+        bloodPressure: {type: GraphQLNonNull(GraphQLString)},
+        respiratoryRate: {type: GraphQLNonNull(GraphQLString)}
+    })
+})
+
+
+
+
+// RootQueryType with six query methods
 const RootQueryType = new GraphQLObjectType({
     name: 'Query',
     description: 'Root Query',
@@ -103,6 +124,41 @@ const RootQueryType = new GraphQLObjectType({
                 }
             }
         },
+
+        //find a single record of patient data via record id
+        oneDataRecord: {
+            type: PatientDataType,
+            description: 'A single record of patient data.', 
+            args: {
+                _id: {type: GraphQLString}
+            },
+            resolve: async(parent, args) => {
+                let data = await PatientData.findById(args._id)
+                return data;
+            }
+        },
+        //find all data of a particular user by their name
+        onePatientsData: {
+            type: new GraphQLList(PatientDataType),
+            description: 'All data records of a single patient.',
+            args: {
+                fullName: {type: GraphQLString}
+            },
+            resolve: async(parent, args) => {
+                const data = await PatientData.find({fullName: args.fullName})
+                return data;
+            }
+        },
+        //find all data records
+        allDataRecords: {
+            type: new GraphQLList(PatientDataType),
+            description: 'List of all patient data records',
+            resolve: async () => {
+                const data = await PatientData.find();
+                return data;
+            }
+        }
+
     })
 })
 
@@ -217,6 +273,72 @@ const RootMutationType = new GraphQLObjectType({
                 }
             }
         },
+
+        addPatientData: {
+            type: PatientDataType,
+            description: 'Add a new record of patient data.',
+            args: {
+                patientId: {type: GraphQLNonNull(GraphQLString)},
+                fullName: {type: GraphQLNonNull(GraphQLString)},
+                date: {type: GraphQLNonNull(GraphQLString)},
+                bodyTemp: {type: GraphQLNonNull(GraphQLString)},
+                heartRate: {type: GraphQLNonNull(GraphQLString)},
+                bloodPressure: {type: GraphQLNonNull(GraphQLString)},
+                respiratoryRate: {type: GraphQLNonNull(GraphQLString)}
+            },
+            resolve: async (parent, args) => {
+                const data = new PatientData({
+                    patientId: args.patientId,
+                    fullName: args.fullName,
+                    date: args.date,
+                    bodyTemp: args.bodyTemp,
+                    heartRate: args.heartRate,
+                    bloodPressure: args.bloodPressure,
+                    respiratoryRate: args.respiratoryRate
+                });
+
+                const newData = await data.save();
+                return newData;
+            }
+        },
+        updatePatientData: {
+            type: PatientDataType,
+            description: 'Update a record of patient data',
+            args: {
+                _id: {type: GraphQLNonNull(GraphQLString)},
+                patientId: {type: GraphQLNonNull(GraphQLString)},
+                fullName: {type: GraphQLNonNull(GraphQLString)},
+                date: {type: GraphQLNonNull(GraphQLString)},
+                bodyTemp: {type: GraphQLNonNull(GraphQLString)},
+                heartRate: {type: GraphQLNonNull(GraphQLString)},
+                bloodPressure: {type: GraphQLNonNull(GraphQLString)},
+                respiratoryRate: {type: GraphQLNonNull(GraphQLString)}
+                
+            },
+            resolve: async (parent, args) => {
+                const updateData = await PatientData.findByIdAndUpdate(args._id, 
+                    {patientId: args.patientId,
+                    fullName: args.fullName,
+                    date: args.date,
+                    bodyTemp: args.bodyTemp,
+                    heartRate: args.heartRate,
+                    bloodPressure: args.bloodPressure,
+                    respiratoryRate: args.respiratoryRate
+                    }, {new: true});
+                return updateData;
+            }
+        },
+        deletePatientData: {
+            type: PatientDataType,
+            description: 'Delete a record of patient data',
+            args: {
+                _id: {type: GraphQLNonNull(GraphQLString)},
+            },
+            resolve: async(parent, {name}) => {
+                const deleteData = await PatientData.findOneAndDelete(args._id);
+                return deleteData;
+            }
+        }
     })
 })
 
