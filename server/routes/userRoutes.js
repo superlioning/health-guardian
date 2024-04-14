@@ -14,11 +14,5 @@ const schema = new GraphQLSchema({
     mutation: RootMutationType
 })
 
-const healthSchema = new GraphQLSchema({
-    query: RootQueryType,
-    mutation: RootMutationType
-});
-
 // Export schema
 module.exports = schema;
-module.exports = healthSchema;
