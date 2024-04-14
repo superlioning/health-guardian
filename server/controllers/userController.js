@@ -50,7 +50,7 @@ const PatientDataType = new GraphQLObjectType({
 
 
 
-// RootQueryType with six query methods
+// RootQueryType with seven query methods
 const RootQueryType = new GraphQLObjectType({
     name: 'Query',
     description: 'Root Query',
@@ -107,7 +107,7 @@ const RootQueryType = new GraphQLObjectType({
             }
         },
 
-        // Fina all users based on roleId
+        // Find all users based on roleId
         // '1' represents for nurse role and '2' represents for patient role
         usersByRoleId: {
             type: new GraphQLList(UserType),
@@ -133,11 +133,15 @@ const RootQueryType = new GraphQLObjectType({
                 _id: {type: GraphQLString}
             },
             resolve: async(parent, args) => {
-                let data = await PatientData.findById(args._id)
-                return data;
+                try{
+                    let data = await PatientData.findById(args._id)
+                    return data;
+                } catch (error) {
+                    throw new Error('Failed to fetch patient data record by id');
+                }
             }
         },
-        //find all data of a particular user by their name
+        //find all data of a particular petient by their name
         onePatientsData: {
             type: new GraphQLList(PatientDataType),
             description: 'All data records of a single patient.',
@@ -145,8 +149,13 @@ const RootQueryType = new GraphQLObjectType({
                 fullName: {type: GraphQLString}
             },
             resolve: async(parent, args) => {
-                const data = await PatientData.find({fullName: args.fullName})
-                return data;
+                try{
+                    const data = await PatientData.find({fullName: args.fullName})
+                    return data;
+                } catch (error) {
+                    throw new Error('Failed to fetch records of a single patient by their full name.');
+                }
+                
             }
         },
         //find all data records
@@ -154,15 +163,18 @@ const RootQueryType = new GraphQLObjectType({
             type: new GraphQLList(PatientDataType),
             description: 'List of all patient data records',
             resolve: async () => {
-                const data = await PatientData.find();
-                return data;
+                try{
+                    const data = await PatientData.find();
+                    return data;
+                } catch (error) {
+                    throw new Error('Failed to fetch all records of patient data.');
+                }
             }
         }
-
     })
 })
 
-// RootMutationType with three mutation methods
+// RootMutationType with seven mutation methods
 const RootMutationType = new GraphQLObjectType({
     name: 'Mutation',
     description: 'Root Mutation',
@@ -274,6 +286,7 @@ const RootMutationType = new GraphQLObjectType({
             }
         },
 
+        //add a record of patient data
         addPatientData: {
             type: PatientDataType,
             description: 'Add a new record of patient data.',
@@ -287,20 +300,25 @@ const RootMutationType = new GraphQLObjectType({
                 respiratoryRate: {type: GraphQLNonNull(GraphQLString)}
             },
             resolve: async (parent, args) => {
-                const data = new PatientData({
-                    patientId: args.patientId,
-                    fullName: args.fullName,
-                    date: args.date,
-                    bodyTemp: args.bodyTemp,
-                    heartRate: args.heartRate,
-                    bloodPressure: args.bloodPressure,
-                    respiratoryRate: args.respiratoryRate
-                });
-
-                const newData = await data.save();
-                return newData;
+                try{
+                    const data = new PatientData({
+                        patientId: args.patientId,
+                        fullName: args.fullName,
+                        date: args.date,
+                        bodyTemp: args.bodyTemp,
+                        heartRate: args.heartRate,
+                        bloodPressure: args.bloodPressure,
+                        respiratoryRate: args.respiratoryRate
+                    });
+    
+                    const newData = await data.save();
+                    return newData;
+                } catch (error) {
+                    throw new Error('Failed to add patient data record.');
+                }
             }
         },
+        //update a record of patient data via id
         updatePatientData: {
             type: PatientDataType,
             description: 'Update a record of patient data',
@@ -316,18 +334,23 @@ const RootMutationType = new GraphQLObjectType({
                 
             },
             resolve: async (parent, args) => {
-                const updateData = await PatientData.findByIdAndUpdate(args._id, 
-                    {patientId: args.patientId,
-                    fullName: args.fullName,
-                    date: args.date,
-                    bodyTemp: args.bodyTemp,
-                    heartRate: args.heartRate,
-                    bloodPressure: args.bloodPressure,
-                    respiratoryRate: args.respiratoryRate
-                    }, {new: true});
-                return updateData;
+                try{
+                    const updateData = await PatientData.findByIdAndUpdate(args._id, 
+                        {patientId: args.patientId,
+                        fullName: args.fullName,
+                        date: args.date,
+                        bodyTemp: args.bodyTemp,
+                        heartRate: args.heartRate,
+                        bloodPressure: args.bloodPressure,
+                        respiratoryRate: args.respiratoryRate
+                        }, {new: true});
+                    return updateData;
+                } catch (error) {
+                    throw new Error('Failed to update patient data record.');
+                }
             }
         },
+        //delete a record of patient data via id
         deletePatientData: {
             type: PatientDataType,
             description: 'Delete a record of patient data',
@@ -335,8 +358,12 @@ const RootMutationType = new GraphQLObjectType({
                 _id: {type: GraphQLNonNull(GraphQLString)},
             },
             resolve: async(parent, {name}) => {
-                const deleteData = await PatientData.findOneAndDelete(args._id);
-                return deleteData;
+                try{
+                    const deleteData = await PatientData.findOneAndDelete(args._id);
+                    return deleteData;
+                } catch (error) {
+                    throw new Error('Failed to delete patient data record.');
+                }
             }
         }
     })
