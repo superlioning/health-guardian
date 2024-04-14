@@ -51,3 +51,34 @@ export const LOGIN = gql`
     }
   }
 `;
+
+// Mutation to add health data
+export const ADD_HEALTH_DATA = gql`
+  mutation AddHealthData(
+    $patientId: String!,
+    $fullName: String!,
+    $date: String!,
+    $bodyTemp: String!,
+    $heartRate: String!,
+    $bloodPressure: String!,
+    $respiratoryRate: String!
+  ) {
+    addHealthData(
+      patientId: $patientId,
+      fullName: $fullName,
+      date: $date,
+      bodyTemp: $bodyTemp,
+      heartRate: $heartRate,
+      bloodPressure: $bloodPressure,
+      respiratoryRate: $respiratoryRate
+    ) {
+      patientId
+      fullName
+      date
+      bodyTemp
+      heartRate
+      bloodPressure
+      respiratoryRate
+    }
+  }
+`;

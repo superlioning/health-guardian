@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const expressGraphQL = require('express-graphql').graphqlHTTP
 const schema = require('./routes/userRoutes')
+const healthSchema = require('./routes/userRoutes');
 require('dotenv').config()
 
 
@@ -32,6 +33,11 @@ app.use(cors());
 // GraphQL endpoint configuration 
 app.use('/users', expressGraphQL({
     schema: schema,
+    graphiql: true
+}));
+
+app.use('/patientdatas', expressGraphQL({
+    schema: healthSchema,
     graphiql: true
 }));
 
