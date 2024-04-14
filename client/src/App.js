@@ -10,6 +10,7 @@ import PatientData from './pages/PatientData';
 import OnePatient from './pages/OnePatient';
 import NavBar from "./components/Navbar";
 import Footer from "./components/Footer";
+import PatientHealthForm from './pages/PatientHealthForm';
 
 
 // Use React Router to navigate between different pages
@@ -22,6 +23,7 @@ function App() {
           <Route exact path="/" element={<HomePage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/patientHealthForm" element={<PatientHealthForm />} />
           <Route path='/nurse' element={<NurseDashboard />} />
           <Route path='/addVitalSigns' element={<AddVitalSigns />} />
           <Route path='/patientData' element={<PatientData />} />

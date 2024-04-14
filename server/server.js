@@ -5,8 +5,8 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const expressGraphQL = require('express-graphql').graphqlHTTP
 const schema = require('./routes/userRoutes')
+const healthSchema = require('./routes/userRoutes');
 const qnaSchema = require('./routes/qnaRoutes')
-
 require('dotenv').config()
 
 
@@ -15,7 +15,6 @@ require('dotenv').config()
  * Connect to MongoDB database with connection string from .env file
  * Define route for GraphQL endpoint
  */
-
 
 const app = express()
 
@@ -37,6 +36,11 @@ app.use('/users', expressGraphQL({
     graphiql: true
 }));
 
+app.use('/patientdatas', expressGraphQL({
+    schema: healthSchema,
+    graphiql: true
+}));
+  
 // GraphQL endpoint configuration for QnA
 app.use('/qna', expressGraphQL({
     schema: qnaSchema,
