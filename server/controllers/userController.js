@@ -141,16 +141,16 @@ const RootQueryType = new GraphQLObjectType({
                 }
             }
         },
-        //find all data of a particular petient by their name
+        //find all data of a particular petient by their patient id
         onePatientsData: {
             type: new GraphQLList(PatientDataType),
             description: 'All data records of a single patient.',
             args: {
-                fullName: {type: GraphQLString}
+                patientId: {type: GraphQLString}
             },
             resolve: async(parent, args) => {
                 try{
-                    const data = await PatientData.find({fullName: args.fullName})
+                    const data = await PatientData.find({patientId: args.patientId})
                     return data;
                 } catch (error) {
                     throw new Error('Failed to fetch records of a single patient by their full name.');
