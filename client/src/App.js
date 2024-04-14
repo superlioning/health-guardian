@@ -4,6 +4,10 @@ import './App.css';
 import HomePage from './pages/HomePage';
 import SignupPage from './pages/SignupPage';
 import LoginPage from './pages/LoginPage';
+import NurseDashboard from './pages/NurseDashboard'
+import AddVitalSigns from './pages/AddVitalSigns'
+import PatientData from './pages/PatientData';
+import OnePatient from './pages/OnePatient';
 import NavBar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PatientHealthForm from './pages/PatientHealthForm';
@@ -20,6 +24,10 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/patientHealthForm" element={<PatientHealthForm />} />
+          <Route path='/nurse' element={<NurseDashboard />} />
+          <Route path='/addVitalSigns' element={<AddVitalSigns />} />
+          <Route path='/patientData' element={<PatientData />} />
+          <Route path='/patientData/:id' element={<OnePatient />} />
         </Routes>
         <Footer />
       </Router>

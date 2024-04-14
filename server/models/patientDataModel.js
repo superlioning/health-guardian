@@ -1,36 +1,44 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-const patientDataSchema = new mongoose.Schema({
+/*
+*   Define a mongoose schema for patient data which includes
+*   patientId, full name, date of visit, body temperature, 
+*   heart rate, blood pressure, and respiratory rate
+*/
+
+// patient data schema
+const PatientDataSchema = new mongoose.Schema({
     patientId: {
         type: String,
-        required: [true, 'Patient ID is required']
+        required: [true, 'Please enter the ID number of the patient.']
     },
     fullName: {
         type: String,
-        required: [true, 'Full name is required']
+        required: [true, 'Please enter the full name of the patient.']
     },
     date: {
         type: String,
-        required: [true, 'Date is required']
+        required: [true, 'Please enter the date of visit.']
     },
     bodyTemp: {
         type: String,
-        required: [true, 'Body temperature is required']
+        required: [true, 'Please enter the body temperature.']
     },
     heartRate: {
         type: String,
-        required: [true, 'Heart rate is required']
+        required: [true, 'Please enter the heart rate.']
     },
     bloodPressure: {
         type: String,
-        required: [true, 'Blood pressure is required']
+        required: [true, 'Please enter the blood pressure.']
     },
     respiratoryRate: {
         type: String,
-        required: [true, 'Respiratory rate is required']
+        required: [true, 'Please enter the respiratory rate.']
     }
-});
+})
 
-// Define and export the patient data model
-const PatientData = mongoose.model('patientdatas', patientDataSchema);
-module.exports = PatientData;
+//export patient data model
+
+const PatientData = mongoose.model('PatientData', PatientDataSchema)
+module.exports = PatientData

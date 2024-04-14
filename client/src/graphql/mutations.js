@@ -52,26 +52,42 @@ export const LOGIN = gql`
   }
 `;
 
-// Mutation to add health data
+// mutation to add patient data record
 export const ADD_HEALTH_DATA = gql`
-  mutation AddHealthData(
-    $patientId: String!,
-    $fullName: String!,
-    $date: String!,
-    $bodyTemp: String!,
-    $heartRate: String!,
-    $bloodPressure: String!,
-    $respiratoryRate: String!
-  ) {
-    addHealthData(
-      patientId: $patientId,
-      fullName: $fullName,
-      date: $date,
-      bodyTemp: $bodyTemp,
-      heartRate: $heartRate,
-      bloodPressure: $bloodPressure,
-      respiratoryRate: $respiratoryRate
-    ) {
+  mutation AddPatientData($patientId: String!, $fullName: String!, $date: String!, $bodyTemp: String!, $heartRate: String!, $bloodPressure: String!, $respiratoryRate: String!) {
+    addPatientData(patientId: $patientId, fullName: $fullName, date: $date, bodyTemp: $bodyTemp, heartRate: $heartRate, bloodPressure: $bloodPressure, respiratoryRate: $respiratoryRate) {
+      _id
+      patientId
+      fullName
+      date
+      bodyTemp
+      heartRate
+      bloodPressure
+      respiratoryRate
+    }
+  }
+`;
+
+//mutation to update patient data record
+export const UPDATE_PATIENTDATA = gql`
+  mutation UpdatePatientData($_id: String!,$patientId: String!, $fullName: String!, $date: String!, $bodyTemp: String!, $heartRate: String!, $bloodPressure: String!, $respiratoryRate: String!) {
+    updatePatientData(_id: $_id, patientId: $patientId, fullName: $fullName, date: $date, bodyTemp: $bodyTemp, heartRate: $heartRate, bloodPressure: $bloodPressure, respiratoryRate: $respiratoryRate) {
+      _id
+      patientId
+      fullName
+      date
+      bodyTemp
+      heartRate
+      bloodPressure
+      respiratoryRate
+    }
+  }
+`;
+// mutation to delete patient data record
+export const DELETE_PATIENTDATA = gql`
+  mutation DeletePatientData($_id: String!) {
+    deletePatientData(_id: $_id) {
+      _id
       patientId
       fullName
       date

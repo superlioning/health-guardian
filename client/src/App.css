@@ -36,3 +36,87 @@
     transform: rotate(360deg);
   }
 }
+
+/*nurse dashboard styling*/
+.nurseContainer {
+  width: 80%;
+  background-color: aliceblue;
+  box-shadow: 1px 1px 6px navy;
+  border-radius: 25px;
+  margin: 2% auto;
+  padding: 3%;
+}
+
+/*styling for enter vital signs and access information buttons on the nurse dashboard*/
+.addBtn, .accessBtn {
+  text-decoration: none;
+  background-color: rgb(26, 26, 150);
+  color: aliceblue;
+  font-weight: 500;
+  box-shadow: 1px 1px 8px black;
+  border-radius: 25px;
+  border: 5px;
+  padding: 2%;
+  margin-right: 5%;
+}
+
+/*styling for patient information tables*/
+.vitalInfo {
+  width: 90%;
+  background-color: aliceblue;
+  box-shadow: 1px 1px 6px navy;
+  border-radius: 5px;
+  margin: 2% auto;
+  padding: 3%;
+}
+
+.vitalInfo h1 {
+  margin-top: 10px;
+  text-align: center;
+}
+
+
+.vitalInfoTable table{
+  width: 100%;
+  margin-top: 30px;
+  border-collapse: collapse;
+  border-color: black;
+  border-style: double;
+}
+
+.vitalInfoTable table th {
+  background-color: rgb(26, 26, 150);
+  color: aliceblue;
+  padding: 10px;
+}
+
+.vitalInfoTable tbody td {
+  padding: 10px;
+  text-align: center;
+  border-style: double;
+  border: 1px solid black;
+}
+
+/*styling for search and clear search buttons and input fields*/
+.actions {
+  text-align: right;
+}
+
+.actions button {
+  border: 0;
+  outline: none;
+  background-color: rgb(26, 26, 150);
+  padding: 6px;
+  color: whitesmoke;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.actions input {
+  margin-right: 1%;
+}
+
+/*clear search button*/
+.clearBtn{
+  margin-left: 1%;
+}
