@@ -9,6 +9,9 @@
   "author": "Group 6",
   "license": "ISC",
   "dependencies": {
+    "@tensorflow-models/qna": "^1.0.2",
+    "@tensorflow/tfjs": "^4.17.0",
+    "@tensorflow/tfjs-node": "^4.17.0",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
