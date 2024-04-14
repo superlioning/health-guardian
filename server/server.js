@@ -5,6 +5,8 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const expressGraphQL = require('express-graphql').graphqlHTTP
 const schema = require('./routes/userRoutes')
+const qnaSchema = require('./routes/qnaRoutes')
+
 require('dotenv').config()
 
 
@@ -32,6 +34,12 @@ app.use(cors());
 // GraphQL endpoint configuration 
 app.use('/users', expressGraphQL({
     schema: schema,
+    graphiql: true
+}));
+
+// GraphQL endpoint configuration for QnA
+app.use('/qna', expressGraphQL({
+    schema: qnaSchema,
     graphiql: true
 }));
 
