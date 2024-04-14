@@ -55,3 +55,51 @@ export const GET_USERS_BY_ROLE_ID = gql`
     }
   }
 `;
+
+// Query to find one patient's data by ID
+export const GET_ONE_DATA_BY_ID = gql`
+  query OneDataRecord($_id: String!) {
+    oneDataRecord(_id: $_id) {
+      _id
+      patientId
+      fullName
+      date
+      bodyTemp
+      heartRate
+      bloodPressure
+      respiratoryRate
+    }
+  }
+`;
+
+// Query to find all records of a single patient by patient id
+export const GET_RECORDS_BY_PATIENT_ID = gql`
+  query OnePatientsData($patientId: String!) {
+    onePatientsData(patientId: $patientId) {
+      _id
+      patientId
+      fullName
+      date
+      bodyTemp
+      heartRate
+      bloodPressure
+      respiratoryRate
+    }
+  }
+`;
+
+// Query to find all records
+export const GET_RECORDS = gql`
+  query Records{
+    allDataRecords {
+      _id
+      patientId
+      fullName
+      date
+      bodyTemp
+      heartRate
+      bloodPressure
+      respiratoryRate
+    }
+  }
+`;
