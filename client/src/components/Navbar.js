@@ -27,7 +27,7 @@ function Navbar() {
             )}
             {user && user.roleId === "2" && (
               <li className="nav-item">
-                <Link className="nav-link" to="/patientHealthForm">
+                <Link className="nav-link" to="/patient">
                   Patient Dashboard
                 </Link>
               </li>
