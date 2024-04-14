@@ -53,7 +53,7 @@ export const LOGIN = gql`
 `;
 
 // mutation to add patient data record
-export const ADD_HEALTH_DATA = gql`
+export const ADD_PATIENTDATA = gql`
   mutation AddPatientData($patientId: String!, $fullName: String!, $date: String!, $bodyTemp: String!, $heartRate: String!, $bloodPressure: String!, $respiratoryRate: String!) {
     addPatientData(patientId: $patientId, fullName: $fullName, date: $date, bodyTemp: $bodyTemp, heartRate: $heartRate, bloodPressure: $bloodPressure, respiratoryRate: $respiratoryRate) {
       _id

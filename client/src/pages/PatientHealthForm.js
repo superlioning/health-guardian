@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { ADD_HEALTH_DATA } from '../graphql/mutations';
+import { ADD_PATIENTDATA } from '../graphql/mutations';
 
 const PatientHealthForm = () => {
     const [patientId, setPatientId] = useState('');
@@ -12,7 +12,7 @@ const PatientHealthForm = () => {
     const [respiratoryRate, setRespiratoryRate] = useState('');
     const [warning, setWarning] = useState('');
 
-    const [addHealthData] = useMutation(ADD_HEALTH_DATA);
+    const [addHealthData] = useMutation(ADD_PATIENTDATA);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
