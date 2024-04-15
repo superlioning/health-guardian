@@ -32,6 +32,13 @@ function Navbar() {
                 </Link>
               </li>
             )}
+            {user && user.roleId === "2" && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/symptomChecker">
+                  Symptom Checker
+                </Link>
+              </li>
+            )}
             {user && (
               <li className="nav-item">
                 <Link className="nav-link" to="">

@@ -37,12 +37,6 @@ app.use('/users', expressGraphQL({
     graphiql: true
 }));
 
-// GraphQL endpoint configuration for QnA for testing back end.
-app.use('/qna', expressGraphQL({
-    schema: qnaSchema,
-    graphiql: true
-}));
-
 // Start express server
 const PORT = 4000
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
