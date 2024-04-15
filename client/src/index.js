@@ -8,12 +8,10 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { UserProvider } from "./context/UserContext";
 
 // Setup Apollo Client
-const client = new ApolloClient(
-  {
-    uri: "http://localhost:4000/users",
-    cache: new InMemoryCache()
-  }
-)
+const client = new ApolloClient({
+  uri: "/api/users",
+  cache: new InMemoryCache(),
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
