@@ -4,6 +4,11 @@ import { useQuery, useMutation } from '@apollo/client';
 import { GET_USER_BY_EMAIL } from '../graphql/queries';
 import { ADD_USER } from '../graphql/mutations';
 
+/*
+*Author: Wenjie Zhou
+*/
+
+//user sign up page
 const SignupPage = () => {
 
     // State variables to manage form input and warning message
