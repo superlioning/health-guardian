@@ -3,6 +3,10 @@ import { GET_RECORDS_BY_PATIENT_ID } from '../graphql/queries';
 import { useQuery } from '@apollo/client';
 import '../App.css'
 
+/*
+*Author: Zhenqiao Wang
+*/
+
 // retrieve one patient's vital information and display it in the table
 function OnePatient(){
 
