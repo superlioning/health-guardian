@@ -1,5 +1,10 @@
 import { Link } from 'react-router-dom';
 
+/*
+*Author: Irin Cibi
+*/
+
+//patient dashboard that links to patient health form
 function PatientDashboard() {
 
     return (
