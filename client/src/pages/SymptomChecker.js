@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { CREATE_QNA } from "../graphql/mutations"; // Import the mutation
 
+/*
+*Author: Awas Jomail
+*/
+
+// symptom checker 
 const SymptomCheckerPage = () => {
   const [symptom, setSymptom] = useState("");
   const [loading, setLoading] = useState(false);
@@ -19,6 +24,7 @@ const SymptomCheckerPage = () => {
     },
   });
 
+  // handle user symptom selection
   const handleSymptomSelection = async (selectedSymptom) => {
     setLoading(true);
     setSymptom(selectedSymptom);
