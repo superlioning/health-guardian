@@ -98,3 +98,24 @@ export const DELETE_PATIENTDATA = gql`
     }
   }
 `;
+
+// Define the GraphQL mutation
+export const CREATE_QNA = gql`
+  mutation CreateQnA($symptom: String!) {
+    createQnA(symptom: $symptom) {
+      _id
+      symptom
+      passage
+      questionList
+      answers {
+        question
+        answer {
+          text
+          score
+          startIndex
+          endIndex
+        }
+      }
+    }
+  }
+`;

@@ -37,7 +37,7 @@ app.use('/users', expressGraphQL({
     graphiql: true
 }));
 
-// GraphQL endpoint configuration for QnA
+// GraphQL endpoint configuration for QnA for testing back end.
 app.use('/qna', expressGraphQL({
     schema: qnaSchema,
     graphiql: true
