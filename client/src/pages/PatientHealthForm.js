@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { ADD_PATIENTDATA } from '../graphql/mutations';
 
+/*
+*Author: Irin Cibi
+*/
+
+//patient health form that allows patient to add their own vital information
 const PatientHealthForm = () => {
     const [patientId, setPatientId] = useState('');
     const [fullName, setFullName] = useState('');
@@ -12,8 +17,10 @@ const PatientHealthForm = () => {
     const [respiratoryRate, setRespiratoryRate] = useState('');
     const [warning, setWarning] = useState('');
 
+    // mutation hook to add new patient data
     const [addHealthData] = useMutation(ADD_PATIENTDATA);
 
+    // handle user input
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
