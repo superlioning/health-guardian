@@ -5,6 +5,8 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const expressGraphQL = require('express-graphql').graphqlHTTP
 const schema = require('./routes/userRoutes')
+const qnaSchema = require('./routes/qnaRoutes')
+const serverless = require("serverless-http");
 
 require('dotenv').config()
 
@@ -40,3 +42,5 @@ app.use('/users', expressGraphQL({
 // Start express server
 const PORT = 4000
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+
+module.exports.handler = serverless(app);
