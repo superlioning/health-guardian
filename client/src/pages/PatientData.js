@@ -3,6 +3,10 @@ import { useQuery } from '@apollo/client';
 import { Link } from "react-router-dom"
 import { GET_RECORDS_BY_PATIENT_ID, GET_RECORDS } from "../graphql/queries"
 
+/*
+*Author: Zhenqiao Wang
+*/
+
 // retrieve all patients vital information and display it in the table
 function PatientData() {
 
