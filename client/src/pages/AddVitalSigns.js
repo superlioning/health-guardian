@@ -3,7 +3,11 @@ import { useState } from "react"
 import { Link, useNavigate } from 'react-router-dom';
 import { ADD_PATIENTDATA } from "../graphql/mutations"
 
+/*
+*Author: Zhenqiao Wang
+*/
 
+//add patient vital signs
 function AddVitalSigns() {
 
     //state variables to manage form input
