@@ -1,5 +1,10 @@
 import { Link } from 'react-router-dom';
 
+/*
+*Author: Zhenqiao Wang
+*/
+
+//nurse dashboard to access add vital signs page and patient data tables
 function NurseDashboard() {
 
     return (
