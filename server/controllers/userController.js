@@ -10,7 +10,6 @@ const {
 } = require('graphql')
 const QnA = require("../models/qnaModel");
 const QnAAnswer = require("../models/qnaAnswerModel");
-const qna = require("@tensorflow-models/qna");
 
 /**
  * Implenent GraphQL to design user controller
@@ -435,10 +434,10 @@ const RootMutationType = new GraphQLObjectType({
                 // Extract passage from the retrieved document
                 const passage = qnaDocument.passage;
                 const questionList = qnaDocument.questionList;
-      
+                
                 //loading the model
                 require("@tensorflow/tfjs-node");
-                
+                const qna = require("@tensorflow-models/qna");
                 const model = await qna.load();
       
                 // Finding the answers

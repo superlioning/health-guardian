@@ -46,7 +46,6 @@ const SymptomCheckerPage = () => {
           />
           Ankle Problems
         </label>
-        {/* TODO: add more symptoms in the future */}
       </div>
 
       {loading && <p>Loading...</p>}
