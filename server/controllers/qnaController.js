@@ -1,3 +1,10 @@
+/**
+ * Controller handling QnA Symptoms which is coming in from user input.
+ * Passage and Question list is taken from the data file
+ * THIS IS FOR TESTING THE BACK END WITH GRAPHQL API
+ * @author Awas Jomail
+ */
+
 const {
   GraphQLObjectType,
   GraphQLString,
@@ -10,12 +17,6 @@ const QnA = require("../models/qnaModel");
 const QnAAnswer = require("../models/qnaAnswerModel");
 const qna = require("@tensorflow-models/qna");
 require("@tensorflow/tfjs-node");
-
-/**
- * Controller handling QnA Symptoms which is coming in from user input.
- * Passage and Question list is taken from the data file
- * @author Awas Jomail
- */
 
 // Define AnswerType
 const AnswerType = new GraphQLObjectType({
@@ -36,7 +37,15 @@ const QnAType = new GraphQLObjectType({
     symptom: { type: GraphQLNonNull(GraphQLString) },
     passage: { type: GraphQLNonNull(GraphQLString) },
     questionList: { type: GraphQLNonNull(GraphQLList(GraphQLString)) },
-    answers: { type: GraphQLList(AnswerType) },
+    answers: { 
+      type: GraphQLList(new GraphQLObjectType({
+        name: "answers",
+        fields: () => ({
+          question: { type: GraphQLString },
+          answer: { type: GraphQLList(AnswerType) },
+        }),
+      })),
+    },
   }),
 });
 
@@ -45,6 +54,7 @@ const QnaQueryType = new GraphQLObjectType({
   name: "query",
   description: "Query for QnA data",
   fields: () => ({
+    //QnA Query for getting all data, this is not necessary for functionality, but is needed for graphql API
     allQnaData: {
       type: new GraphQLList(QnAType),
       description:
@@ -86,13 +96,11 @@ const QnaMutations = new GraphQLObjectType({
           const passage = qnaDocument.passage;
           const questionList = qnaDocument.questionList;
 
-          // Load the model
-          require("@tensorflow/tfjs");
+          //loading the model
           const model = await qna.load();
 
           // Finding the answers
           const answersArray = [];
-          const bestAnswers = [];
 
           // Iterate through question list
           for (const question of questionList) {
@@ -102,7 +110,6 @@ const QnaMutations = new GraphQLObjectType({
             // Store best answer and all answers
             const bestAnswer = answers[0];
             answersArray.push({ question, answer: bestAnswer });
-            bestAnswers.push(bestAnswer);
           }
 
           // Save data to new model

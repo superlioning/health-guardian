@@ -10,6 +10,7 @@ import PatientData from './pages/PatientData';
 import OnePatient from './pages/OnePatient';
 import NavBar from "./components/Navbar";
 import Footer from "./components/Footer";
+import SymptomChecker from './pages/SymptomChecker';
 
 
 // Use React Router to navigate between different pages
@@ -25,6 +26,7 @@ function App() {
           <Route path='/nurse' element={<NurseDashboard />} />
           <Route path='/addVitalSigns' element={<AddVitalSigns />} />
           <Route path='/patientData' element={<PatientData />} />
+          <Route path='/symptomChecker' element={<SymptomChecker />} />
           <Route path='/patientData/:id' element={<OnePatient />} />
         </Routes>
         <Footer />
