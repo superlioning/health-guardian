@@ -7,7 +7,7 @@ function Footer() {
         className="text-center p-3"
         style={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
       >
-        © 2024 Health App | <a href="#">Privacy Policy</a>
+        © 2024 Health App | Privacy Policy
       </div>
     </footer>
   );
