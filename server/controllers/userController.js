@@ -47,24 +47,6 @@ const PatientDataType = new GraphQLObjectType({
     })
 })
 
-// RootQueryType with three query methods
-//PatientDataType with data fields
-const PatientDataType = new GraphQLObjectType({
-    name: 'PatientDataType',
-    description: 'This represents a patient data.',
-    fields: () => ({
-        _id: {type: GraphQLNonNull(GraphQLString)},
-        patientId: {type: GraphQLNonNull(GraphQLString)},
-        fullName: {type: GraphQLNonNull(GraphQLString)},
-        date: {type: GraphQLNonNull(GraphQLString)},
-        bodyTemp: {type: GraphQLNonNull(GraphQLString)},
-        heartRate: {type: GraphQLNonNull(GraphQLString)},
-        bloodPressure: {type: GraphQLNonNull(GraphQLString)},
-        respiratoryRate: {type: GraphQLNonNull(GraphQLString)}
-    })
-})
-
-
 // RootQueryType with seven query methods
 const RootQueryType = new GraphQLObjectType({
     name: 'Query',
@@ -165,50 +147,6 @@ const RootQueryType = new GraphQLObjectType({
                     return patientDatas;
                 } catch (error) {
                     throw new Error('Failed to fetch patient health data');
-
-        //find a single record of patient data via record id
-        oneDataRecord: {
-            type: PatientDataType,
-            description: 'A single record of patient data.', 
-            args: {
-                _id: {type: GraphQLString}
-            },
-            resolve: async(parent, args) => {
-                try{
-                    let data = await PatientData.findById(args._id)
-                    return data;
-                } catch (error) {
-                    throw new Error('Failed to fetch patient data record by id');
-                }
-            }
-        },
-        //find all data of a particular petient by their patient id
-        onePatientsData: {
-            type: new GraphQLList(PatientDataType),
-            description: 'All data records of a single patient.',
-            args: {
-                patientId: {type: GraphQLString}
-            },
-            resolve: async(parent, args) => {
-                try{
-                    const data = await PatientData.find({patientId: args.patientId})
-                    return data;
-                } catch (error) {
-                    throw new Error('Failed to fetch records of a single patient by their full name.');
-                }
-                
-            }
-        },
-        //find all data records
-        allDataRecords: {
-            type: new GraphQLList(PatientDataType),
-            description: 'List of all patient data records',
-            resolve: async () => {
-                try{
-                    const data = await PatientData.find();
-                    return data;
-                } catch (error) {
-                    throw new Error('Failed to fetch all records of patient data.');
                 }
             }
         }
@@ -390,84 +328,6 @@ const RootMutationType = new GraphQLObjectType({
                     return deletedPatientData;
                 } catch (error) {
                     throw new Error('Failed to delete patient health data');
-
-        //add a record of patient data
-        addPatientData: {
-            type: PatientDataType,
-            description: 'Add a new record of patient data.',
-            args: {
-                patientId: {type: GraphQLNonNull(GraphQLString)},
-                fullName: {type: GraphQLNonNull(GraphQLString)},
-                date: {type: GraphQLNonNull(GraphQLString)},
-                bodyTemp: {type: GraphQLNonNull(GraphQLString)},
-                heartRate: {type: GraphQLNonNull(GraphQLString)},
-                bloodPressure: {type: GraphQLNonNull(GraphQLString)},
-                respiratoryRate: {type: GraphQLNonNull(GraphQLString)}
-            },
-            resolve: async (parent, args) => {
-                try{
-                    const data = new PatientData({
-                        patientId: args.patientId,
-                        fullName: args.fullName,
-                        date: args.date,
-                        bodyTemp: args.bodyTemp,
-                        heartRate: args.heartRate,
-                        bloodPressure: args.bloodPressure,
-                        respiratoryRate: args.respiratoryRate
-                    });
-    
-                    const newData = await data.save();
-                    return newData;
-                } catch (error) {
-                    throw new Error('Failed to add patient data record.');
-                }
-            }
-        },
-        //update a record of patient data via id
-        updatePatientData: {
-            type: PatientDataType,
-            description: 'Update a record of patient data',
-            args: {
-                _id: {type: GraphQLNonNull(GraphQLString)},
-                patientId: {type: GraphQLNonNull(GraphQLString)},
-                fullName: {type: GraphQLNonNull(GraphQLString)},
-                date: {type: GraphQLNonNull(GraphQLString)},
-                bodyTemp: {type: GraphQLNonNull(GraphQLString)},
-                heartRate: {type: GraphQLNonNull(GraphQLString)},
-                bloodPressure: {type: GraphQLNonNull(GraphQLString)},
-                respiratoryRate: {type: GraphQLNonNull(GraphQLString)}
-                
-            },
-            resolve: async (parent, args) => {
-                try{
-                    const updateData = await PatientData.findByIdAndUpdate(args._id, 
-                        {patientId: args.patientId,
-                        fullName: args.fullName,
-                        date: args.date,
-                        bodyTemp: args.bodyTemp,
-                        heartRate: args.heartRate,
-                        bloodPressure: args.bloodPressure,
-                        respiratoryRate: args.respiratoryRate
-                        }, {new: true});
-                    return updateData;
-                } catch (error) {
-                    throw new Error('Failed to update patient data record.');
-                }
-            }
-        },
-        //delete a record of patient data via id
-        deletePatientData: {
-            type: PatientDataType,
-            description: 'Delete a record of patient data',
-            args: {
-                _id: {type: GraphQLNonNull(GraphQLString)},
-            },
-            resolve: async(parent, {name}) => {
-                try{
-                    const deleteData = await PatientData.findOneAndDelete(args._id);
-                    return deleteData;
-                } catch (error) {
-                    throw new Error('Failed to delete patient data record.');
                 }
             }
         }
