@@ -35,5 +35,6 @@ stages:
     steps:
     - script: |
         cd server
+        npm install
         npm test -- --coverage
       displayName: 'Test Application'
