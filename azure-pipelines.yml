@@ -38,11 +38,16 @@ stages:
         npm install
         npm run test:coverage
       displayName: 'Test Application'
-    
-    - task: PublishCodeCoverageResults@2
-      inputs:
-        codeCoverageTool: 'Cobertura'
-        summaryFileLocation: '$(Agent.TempDirectory)/**/cobertura-coverage.xml'
-        reportDirectory: '$(Agent.TempDirectory)/coverage'
-        failIfCoverageEmpty: true
-      displayName: 'Publish Coverage Results'
+
+- stage: DeployToDev
+  dependsOn: Build
+  jobs:
+  - deployment: Deploy
+    displayName: 'Deploy'
+    environment: 'Dev Env'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - script: echo 'mock deployment'
+  
