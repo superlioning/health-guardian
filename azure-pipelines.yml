@@ -2,7 +2,7 @@ trigger:
 - main
 
 pool:
-  name: self-hosted
+  name: self-hosted-centennial
 
 stages:
 - stage: Prepare
