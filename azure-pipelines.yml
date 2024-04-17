@@ -34,11 +34,6 @@ stages:
   - job: Test
     steps:
     - script: |
-        cd client
-        npm test -- --coverage
-      displayName: 'Test React App'
-
-    - script: |
         cd server
         npm test -- --coverage
-      displayName: 'Test Express Server'
+      displayName: 'Test Application'
