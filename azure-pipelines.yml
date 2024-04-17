@@ -39,10 +39,10 @@ stages:
         npm run test:coverage
       displayName: 'Test Application'
     
-    - task: PublishCodeCoverageResults@1
+    - task: PublishCodeCoverageResults@2
       inputs:
         codeCoverageTool: 'Cobertura'
-        summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/cobertura-coverage.xml'
-        reportDirectory: '$(System.DefaultWorkingDirectory)/coverage'
+        summaryFileLocation: '$(Agent.TempDirectory)/**/cobertura-coverage.xml'
+        reportDirectory: '$(Agent.TempDirectory)/coverage'
         failIfCoverageEmpty: true
       displayName: 'Publish Coverage Results'
