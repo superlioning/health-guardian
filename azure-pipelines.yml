@@ -57,10 +57,10 @@ stages:
     
 
 - stage: DeployToDevEnv
-  dependsOn: Build
+  dependsOn: Deliver
   jobs:
-  - deployment: Deliver
-    displayName: 'Deploy'
+  - deployment: DeployToDevEnv
+    displayName: 'Deploy to dev'
     environment: 'Dev Env'
     strategy:
       runOnce:
@@ -69,10 +69,10 @@ stages:
           - script: echo 'mock deployment to dev env'
 
 - stage: DeployToQATEnv
-  dependsOn: Build
+  dependsOn: Deliver
   jobs:
-  - deployment: Deliver
-    displayName: 'Deploy'
+  - deployment: DeployToQATEnv
+    displayName: 'Deploy to QAT'
     environment: 'QAT Env'
     strategy:
       runOnce:
@@ -81,10 +81,10 @@ stages:
           - script: echo 'mock deployment to QAT Env'
 
 - stage: DeployToStagingEnv
-  dependsOn: Build
+  dependsOn: Deliver
   jobs:
-  - deployment: Deliver
-    displayName: 'Deploy'
+  - deployment: DeployToStagingEnv
+    displayName: 'Deploy to staging'
     environment: 'Staging Env'
     strategy:
       runOnce:
@@ -93,10 +93,10 @@ stages:
           - script: echo 'mock deployment to staging env'
 
 - stage: DeployToProductionEnv
-  dependsOn: Build
+  dependsOn: Deliver
   jobs:
-  - deployment: Deliver
-    displayName: 'Deploy'
+  - deployment: DeployToProductionEnv
+    displayName: 'Deploy to Prod'
     environment: 'Production Env'
     strategy:
       runOnce:
