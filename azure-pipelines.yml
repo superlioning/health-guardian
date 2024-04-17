@@ -13,30 +13,39 @@ stages:
       inputs:
         versionSpec: '20.x'
       displayName: 'Install Node.js'
+    
+    - task: Npm@1
+      inputs:
+        workingDir: '$(System.DefaultWorkingDirectory)/server'
+        command: 'install'
+      displayName: 'npm install'
+    
+    - task: Npm@1
+      inputs:
+        workingDir: '$(System.DefaultWorkingDirectory)/client'
+        command: 'install'
+      displayName: 'npm install'
 
 - stage: Build
   jobs:
   - job: Build
     steps:
-    - script: |
-        cd client
-        npm install
-        npm run build
-      displayName: 'Build React App'
-
-    - script: |
-        cd server
-        npm install
-      displayName: 'Install Dependencies for Express Server'
+    - task: Npm@1
+      inputs:
+        workingDir: '$(System.DefaultWorkingDirectory)/client'
+        command: 'custom'
+        customCommand: 'run build'
+      displayName: 'Build Application'
 
 - stage: Test
   jobs:
   - job: Test
     steps:
-    - script: |
-        cd server
-        npm install
-        npm run test:coverage
+    - task: Npm@1
+      inputs:
+        workingDir: '$(System.DefaultWorkingDirectory)/server'
+        command: 'custom'
+        customCommand: 'run test:coverage'
       displayName: 'Test Application'
     
     - task: PublishCodeCoverageResults@1
