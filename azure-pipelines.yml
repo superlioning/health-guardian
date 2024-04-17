@@ -20,7 +20,7 @@ stages:
     steps:
     - task: Npm@1
       inputs:
-        workingDir: '$(System.DefaultWorkingDirectory)/server'
+        workingDir: '$(System.DefaultWorkingDirectory)/client'
         command: 'install'
       displayName: 'npm install'
 
@@ -37,7 +37,7 @@ stages:
     steps:
     - task: Npm@1
       inputs:
-        workingDir: '$(System.DefaultWorkingDirectory)/client'
+        workingDir: '$(System.DefaultWorkingDirectory)/server'
         command: 'install'
       displayName: 'npm install'
 
