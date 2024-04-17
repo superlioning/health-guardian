@@ -67,6 +67,10 @@ stages:
         deploy:
           steps:
           - script: echo 'mock deployment to dev env'
+          - script: |
+              netlify deploy --auth nfp_vCtfharntzjZctA4iCJzxuGV4YHNK2yh86f5 --dir '$(System.ArtifactsDirectory)/drop
+         
+              
 
 - stage: DeployToQATEnv
   dependsOn: Deliver
