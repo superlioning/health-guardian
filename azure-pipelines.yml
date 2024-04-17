@@ -2,7 +2,7 @@ trigger:
 - main
 
 pool:
-  name: self-hosted
+  name: self-hosted-centennial
 
 stages:
 - stage: Prepare
@@ -19,16 +19,14 @@ stages:
   - job: Build
     steps:
     - script: |
-        
         cd client
-        "C:\Program Files\nodejs\npm" install
-        "C:\Program Files\nodejs\npm" install
+        npm install
+        npm run build
       displayName: 'Build React App'
 
     - script: |
-        SET PATH=%PATH%;C:\Program Files\nodejs\
         cd server
-        "C:\Program Files\nodejs\npm" install
+        npm install
       displayName: 'Install Dependencies for Express Server'
 
 - stage: Test
