@@ -39,15 +39,68 @@ stages:
         npm run test:coverage
       displayName: 'Test Application'
 
-- stage: DeployToDev
+- stage: Deliver
   dependsOn: Build
   jobs:
-  - deployment: Deploy
+  - job: Publish
+    steps:
+    - task: CopyFiles@2
+      inputs:
+        Contents: '**'
+        TargetFolder: '$(build.artifactstagingdirectory)'
+        
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+    
+
+- stage: Deploy To Dev Env
+  dependsOn: Build
+  jobs:
+  - deployment: Deliver
     displayName: 'Deploy'
     environment: 'Dev Env'
     strategy:
       runOnce:
         deploy:
           steps:
-          - script: echo 'mock deployment'
+          - script: echo 'mock deployment to dev env'
+
+- stage: Deploy To QAT Env
+  dependsOn: Build
+  jobs:
+  - deployment: Deliver
+    displayName: 'Deploy'
+    environment: 'QAT Env'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - script: echo 'mock deployment to QAT Env'
+
+- stage: Deploy To Staging Env
+  dependsOn: Build
+  jobs:
+  - deployment: Deliver
+    displayName: 'Deploy'
+    environment: 'Staging Env'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - script: echo 'mock deployment to staging env'
+
+- stage: Deploy To Production Env
+  dependsOn: Build
+  jobs:
+  - deployment: Deliver
+    displayName: 'Deploy'
+    environment: 'Production Env'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - script: echo 'mock deployment to production env'
   
