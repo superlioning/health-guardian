@@ -13,23 +13,17 @@ stages:
       inputs:
         versionSpec: '20.x'
       displayName: 'Install Node.js'
-    
-    - task: Npm@1
-      inputs:
-        workingDir: '$(System.DefaultWorkingDirectory)/server'
-        command: 'install'
-      displayName: 'npm install'
-    
-    - task: Npm@1
-      inputs:
-        workingDir: '$(System.DefaultWorkingDirectory)/client'
-        command: 'install'
-      displayName: 'npm install'
 
 - stage: Build
   jobs:
   - job: Build
     steps:
+    - task: Npm@1
+      inputs:
+        workingDir: '$(System.DefaultWorkingDirectory)/server'
+        command: 'install'
+      displayName: 'npm install'
+
     - task: Npm@1
       inputs:
         workingDir: '$(System.DefaultWorkingDirectory)/client'
@@ -41,6 +35,12 @@ stages:
   jobs:
   - job: Test
     steps:
+    - task: Npm@1
+      inputs:
+        workingDir: '$(System.DefaultWorkingDirectory)/client'
+        command: 'install'
+      displayName: 'npm install'
+
     - task: Npm@1
       inputs:
         workingDir: '$(System.DefaultWorkingDirectory)/server'
