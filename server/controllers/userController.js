@@ -10,8 +10,8 @@ const {
 } = require('graphql')
 const QnA = require("../models/qnaModel");
 const QnAAnswer = require("../models/qnaAnswerModel");
-require("@tensorflow/tfjs-node");
-const qna = require("@tensorflow-models/qna");
+//require("@tensorflow/tfjs-node");
+//const qna = require("@tensorflow-models/qna");
 
 /**
  * Implenent GraphQL to design user controller
