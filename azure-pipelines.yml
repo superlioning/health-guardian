@@ -36,5 +36,13 @@ stages:
     - script: |
         cd server
         npm install
-        npm test -- --coverage
+        npm run test:coverage
       displayName: 'Test Application'
+    
+    - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: 'Cobertura'
+      summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/cobertura-coverage.xml'
+      reportDirectory: '$(System.DefaultWorkingDirectory)/coverage'
+      failIfCoverageEmpty: true
+    displayName: 'Publish Coverage Results'
