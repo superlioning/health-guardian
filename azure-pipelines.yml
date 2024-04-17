@@ -1,0 +1,41 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '20.x'
+  displayName: 'Install Node.js'
+
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    steps:
+    - script: |
+        cd client
+        npm install
+        npm run build
+      displayName: 'Build React App'
+
+    - script: |
+        cd server
+        npm install
+      displayName: 'Install Dependencies for Express Server'
+
+- stage: Test
+  jobs:
+  - job: Test
+    steps:
+    - script: |
+        cd client
+        npm test -- --coverage
+      displayName: 'Test React App'
+
+    - script: |
+        cd server
+        npm test -- --coverage
+      displayName: 'Test Express Server'
