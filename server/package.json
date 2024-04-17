@@ -4,7 +4,8 @@
   "description": "Backend for COMP308 Group Project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --forceExit",
+    "test:coverage": "jest --coverage --forceExit"
   },
   "author": "Group 6",
   "license": "ISC",
@@ -21,5 +22,9 @@
     "mongoose": "^8.3.0",
     "nodemon": "^3.1.0",
     "validator": "^13.11.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.4"
   }
 }

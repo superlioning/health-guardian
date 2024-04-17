@@ -37,5 +37,10 @@ app.use('/users', expressGraphQL({
 }));
 
 // Start express server
-const PORT = 4000
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+if (require.main === module) {
+    // This block will only execute if this file is run directly
+    const PORT = 4000;
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
+module.exports = app; // Export app for testing
