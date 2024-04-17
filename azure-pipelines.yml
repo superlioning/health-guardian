@@ -56,7 +56,7 @@ stages:
         publishLocation: 'Container'
     
 
-- stage: Deploy To Dev Env
+- stage: DeployToDevEnv
   dependsOn: Build
   jobs:
   - deployment: Deliver
@@ -68,7 +68,7 @@ stages:
           steps:
           - script: echo 'mock deployment to dev env'
 
-- stage: Deploy To QAT Env
+- stage: DeployToQATEnv
   dependsOn: Build
   jobs:
   - deployment: Deliver
@@ -80,7 +80,7 @@ stages:
           steps:
           - script: echo 'mock deployment to QAT Env'
 
-- stage: Deploy To Staging Env
+- stage: DeployToStagingEnv
   dependsOn: Build
   jobs:
   - deployment: Deliver
@@ -92,7 +92,7 @@ stages:
           steps:
           - script: echo 'mock deployment to staging env'
 
-- stage: Deploy To Production Env
+- stage: DeployToProductionEnv
   dependsOn: Build
   jobs:
   - deployment: Deliver
