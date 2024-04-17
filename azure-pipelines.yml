@@ -19,14 +19,16 @@ stages:
   - job: Build
     steps:
     - script: |
+        
         cd client
-        npm install
-        npm run build
+        "C:\Program Files\nodejs\npm" install
+        "C:\Program Files\nodejs\npm" install
       displayName: 'Build React App'
 
     - script: |
+        SET PATH=%PATH%;C:\Program Files\nodejs\
         cd server
-        npm install
+        "C:\Program Files\nodejs\npm" install
       displayName: 'Install Dependencies for Express Server'
 
 - stage: Test
