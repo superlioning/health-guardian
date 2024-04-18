@@ -5,15 +5,6 @@ pool:
   name: self-hosted-centennial
 
 stages:
-- stage: Prepare
-  jobs:
-  - job: Prepare
-    steps:
-    - task: NodeTool@0
-      inputs:
-        versionSpec: '20.x'
-      displayName: 'Install Node.js'
-
 - stage: Build
   jobs:
   - job: Build

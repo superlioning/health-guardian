@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --forceExit",
-    "test:coverage": "jest --coverage --forceExit"
+    "test:coverage": "jest --coverage --coverageReporters=cobertura --forceExit"
   },
   "author": "Group 6",
   "license": "ISC",
