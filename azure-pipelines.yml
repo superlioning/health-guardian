@@ -1,5 +1,5 @@
 trigger:
-- main
+- 25-create-cd-pipeline
 
 pool:
   name: self-hosted-centennial
