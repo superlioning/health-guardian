@@ -29,6 +29,19 @@ stages:
         reportDirectory: '$(System.DefaultWorkingDirectory)/coverage'
         failIfCoverageEmpty: true
       displayName: 'Publish Coverage Results'
+    
+    - task: IISWebAppManagementOnMachineGroup@0
+      inputs:
+        IISDeploymentType: 'IISWebsite'
+        ActionIISWebsite: 'CreateOrUpdateWebsite'
+        WebsiteName: 'COMP367'
+        WebsitePhysicalPath: '%SystemDrive%\inetpub\wwwroot'
+        WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
+
+    - task: IISWebAppDeploymentOnMachineGroup@0
+      inputs:
+        WebSiteName: 'COMP367'
+        Package: '$(System.DefaultWorkingDirectory)/_Final Project-CICD Pipeline-Main Branch/release'
 
 - stage: Deliver
   jobs:
