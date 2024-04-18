@@ -5,23 +5,6 @@ pool:
   name: self-hosted-centennial
 
 stages:
-- stage: Build
-  jobs:
-  - job: Build
-    steps:
-    - task: Npm@1
-      inputs:
-        workingDir: '$(System.DefaultWorkingDirectory)/client'
-        command: 'install'
-      displayName: 'npm install'
-
-    - task: Npm@1
-      inputs:
-        workingDir: '$(System.DefaultWorkingDirectory)/client'
-        command: 'custom'
-        customCommand: 'run build'
-      displayName: 'Build Application'
-
 - stage: Test
   jobs:
   - job: Test
@@ -46,3 +29,27 @@ stages:
         reportDirectory: '$(System.DefaultWorkingDirectory)/coverage'
         failIfCoverageEmpty: true
       displayName: 'Publish Coverage Results'
+
+- stage: Build
+  jobs:
+  - job: Build
+    steps:
+    - task: Npm@1
+      inputs:
+        workingDir: '$(System.DefaultWorkingDirectory)/client'
+        command: 'install'
+      displayName: 'npm install'
+
+    - task: Npm@1
+      inputs:
+        workingDir: '$(System.DefaultWorkingDirectory)/client'
+        command: 'custom'
+        customCommand: 'run build'
+      displayName: 'Build Application'
+    
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+      displayName: 'Release Build Artifacts'
