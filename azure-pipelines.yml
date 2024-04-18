@@ -1,5 +1,5 @@
 trigger:
-- main
+- 23-create-ci-pipeline
 
 pool:
   name: self-hosted-centennial
