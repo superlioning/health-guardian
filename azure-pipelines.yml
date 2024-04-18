@@ -41,7 +41,7 @@ stages:
     - task: IISWebAppDeploymentOnMachineGroup@0
       inputs:
         WebSiteName: 'COMP367'
-        Package: '$(System.DefaultWorkingDirectory)/_Final Project-CICD Pipeline-Main Branch/release'
+        Package: '$(Pipeline.Workspace)\release'
 
 - stage: Deliver
   jobs:
