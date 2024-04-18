@@ -17,7 +17,7 @@ stages:
 
     - task: Npm@1
       inputs:
-        workingDir: '$(System.DefaultWorkingDirectory)/server'
+        workingDir: 'server'
         command: 'custom'
         customCommand: 'run test:coverage'
       displayName: 'Test Application'
@@ -30,26 +30,88 @@ stages:
         failIfCoverageEmpty: true
       displayName: 'Publish Coverage Results'
 
-- stage: Build
+- stage: Deliver
   jobs:
   - job: Build
     steps:
     - task: Npm@1
       inputs:
-        workingDir: '$(System.DefaultWorkingDirectory)/client'
+        workingDir: 'client'
         command: 'install'
-      displayName: 'npm install'
+      displayName: 'npm install for client'
+    
+    - task: Npm@1
+      inputs:
+        workingDir: 'server'
+        command: 'install'
+      displayName: 'npm install for server'
 
     - task: Npm@1
       inputs:
-        workingDir: '$(System.DefaultWorkingDirectory)/client'
+        workingDir: 'client'
         command: 'custom'
         customCommand: 'run build'
       displayName: 'Build Application'
+
+    - task: CopyFiles@2
+      inputs:
+        Contents: |
+          client/dist/**
+          server/**
+        TargetFolder: $(Build.ArtifactStagingDirectory)
+      displayName: 'Copy Frontend and Backend Files'
     
     - task: PublishBuildArtifacts@1
       inputs:
-        PathtoPublish: '$(System.DefaultWorkingDirectory)/client/build'
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop'
         publishLocation: 'Container'
       displayName: 'Release Build Artifacts'
+
+- stage: DeployToDevEnv
+  dependsOn: Deliver
+  jobs:
+  - deployment: DeployToDevEnv
+    displayName: 'Deploy to dev'
+    environment: 'Dev Env'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - script: echo 'mock deployment to dev env'          
+
+- stage: DeployToQATEnv
+  dependsOn: Deliver
+  jobs:
+  - deployment: DeployToQATEnv
+    displayName: 'Deploy to QAT'
+    environment: 'QAT Env'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - script: echo 'mock deployment to QAT Env'
+
+- stage: DeployToStagingEnv
+  dependsOn: Deliver
+  jobs:
+  - deployment: DeployToStagingEnv
+    displayName: 'Deploy to staging'
+    environment: 'Staging Env'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - script: echo 'mock deployment to staging env'
+
+- stage: DeployToProductionEnv
+  dependsOn: Deliver
+  jobs:
+  - deployment: DeployToProductionEnv
+    displayName: 'Deploy to Prod'
+    environment: 'Production Env'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - script: echo 'mock deployment to production env'
