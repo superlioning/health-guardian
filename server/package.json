@@ -4,14 +4,12 @@
   "description": "Backend for COMP308 Group Project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --forceExit",
+    "test:coverage": "jest --coverage --coverageReporters=cobertura --forceExit"
   },
   "author": "Group 6",
   "license": "ISC",
   "dependencies": {
-    "@tensorflow-models/qna": "^1.0.2",
-    "@tensorflow/tfjs": "^4.17.0",
-    "@tensorflow/tfjs-node": "^4.17.0",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
@@ -24,5 +22,10 @@
     "mongoose": "^8.3.0",
     "nodemon": "^3.1.0",
     "validator": "^13.11.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.4"
   }
 }

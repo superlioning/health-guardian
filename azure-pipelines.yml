@@ -1,0 +1,48 @@
+trigger:
+- main
+
+pool:
+  name: self-hosted-centennial
+
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    steps:
+    - task: Npm@1
+      inputs:
+        workingDir: '$(System.DefaultWorkingDirectory)/client'
+        command: 'install'
+      displayName: 'npm install'
+
+    - task: Npm@1
+      inputs:
+        workingDir: '$(System.DefaultWorkingDirectory)/client'
+        command: 'custom'
+        customCommand: 'run build'
+      displayName: 'Build Application'
+
+- stage: Test
+  jobs:
+  - job: Test
+    steps:
+    - task: Npm@1
+      inputs:
+        workingDir: '$(System.DefaultWorkingDirectory)/server'
+        command: 'install'
+      displayName: 'npm install'
+
+    - task: Npm@1
+      inputs:
+        workingDir: '$(System.DefaultWorkingDirectory)/server'
+        command: 'custom'
+        customCommand: 'run test:coverage'
+      displayName: 'Test Application'
+    
+    - task: PublishCodeCoverageResults@2
+      inputs:
+        codeCoverageTool: 'Cobertura'
+        summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/cobertura-coverage.xml'
+        reportDirectory: '$(System.DefaultWorkingDirectory)/coverage'
+        failIfCoverageEmpty: true
+      displayName: 'Publish Coverage Results'

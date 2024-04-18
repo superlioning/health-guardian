@@ -5,7 +5,6 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const expressGraphQL = require('express-graphql').graphqlHTTP
 const schema = require('./routes/userRoutes')
-const qnaSchema = require('./routes/qnaRoutes')
 
 require('dotenv').config()
 
@@ -38,5 +37,10 @@ app.use('/users', expressGraphQL({
 }));
 
 // Start express server
-const PORT = 4000
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+if (require.main === module) {
+    // This block will only execute if this file is run directly
+    const PORT = 4000;
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
+module.exports = app; // Export app for testing
