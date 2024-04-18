@@ -29,19 +29,6 @@ stages:
         reportDirectory: '$(System.DefaultWorkingDirectory)/coverage'
         failIfCoverageEmpty: true
       displayName: 'Publish Coverage Results'
-    
-    - task: IISWebAppManagementOnMachineGroup@0
-      inputs:
-        IISDeploymentType: 'IISWebsite'
-        ActionIISWebsite: 'CreateOrUpdateWebsite'
-        WebsiteName: 'COMP367'
-        WebsitePhysicalPath: '%SystemDrive%\inetpub\wwwroot'
-        WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
-
-    - task: IISWebAppDeploymentOnMachineGroup@0
-      inputs:
-        WebSiteName: 'COMP367'
-        Package: '$(Pipeline.Workspace)\release'
 
 - stage: Deliver
   jobs:
@@ -66,6 +53,19 @@ stages:
         ArtifactName: 'release'
         publishLocation: 'Container'
       displayName: 'Release Build Artifacts'
+
+    - task: IISWebAppManagementOnMachineGroup@0
+      inputs:
+        IISDeploymentType: 'IISWebsite'
+        ActionIISWebsite: 'CreateOrUpdateWebsite'
+        WebsiteName: 'COMP367'
+        WebsitePhysicalPath: '%SystemDrive%\inetpub\wwwroot'
+        WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
+
+    - task: IISWebAppDeploymentOnMachineGroup@0
+      inputs:
+        WebSiteName: 'COMP367'
+        Package: '$(Pipeline.Workspace)\release'
 
 - stage: DeployToDevEnv
   dependsOn: Deliver
